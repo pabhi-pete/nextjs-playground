@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -58,8 +58,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignInSide() {
-  const classes = useStyles();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("handleSubmit");
+    console.log(event);
+    console.log( 'Email:', email, 'Password: ', password);
+  }
+
+  const classes = useStyles();
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -72,7 +81,7 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -83,6 +92,8 @@ export default function SignInSide() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onInput={ e=>setEmail(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -94,10 +105,8 @@ export default function SignInSide() {
               type="password"
               id="password"
               autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              value={password}
+              onInput={ e=>setPassword(e.target.value)}
             />
             <Button
               type="submit"
@@ -108,18 +117,6 @@ export default function SignInSide() {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
             <Box mt={5}>
               <Copyright />
             </Box>
